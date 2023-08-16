@@ -6,11 +6,12 @@
 
 {% block content %}
     <form method="POST" class="w-25 mx-auto">
+        {{ form.hidden_tag() }}
         <div class="mb-3">
-            <label for="pokemon_name" class="form-label">Enter Pokemon:</label>
-            <input type="text" class="form-control" id="pokemon_name" name="pokemon_name">
+            {{ form.pokemon_name.label(class='form-label') }}
+            {{ form.pokemon_name(class='form-control') }}
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        {{ form.search_btn(class='btn btn-danger') }}
     </form>
     {% if pokemon %}
       <div class="card mx-auto text-bg-light border-danger my-5" style="width: 18rem;">
@@ -37,7 +38,6 @@
             <li class="list-group-item">DEFENSE: {{pokemon.stats.defense}}</li>
           </ul>
           </div>
-          
         </div>
       </div>
     {% endif %}
