@@ -1,12 +1,22 @@
 from flask import request, render_template
 import requests
 from app import app
-from .forms import SearchForm
+from .forms import SearchForm, LoginForm, SignupForm
 
 @app.route("/")
 @app.route("/home")
 def home():
     return render_template('home.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    return render_template('login.html', form=form)
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    form = SignupForm()
+    return render_template('signup.html', form=form)
 
 @app.route('/pokemon/info', methods=['GET', 'POST'])
 def get_pokemon_info():
