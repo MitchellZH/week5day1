@@ -5,3 +5,7 @@ body {
   font-family: 'Roboto', sans-serif;
   color: white;
 }
+
+.alert {
+  margin-bottom: 0 !important;
+}

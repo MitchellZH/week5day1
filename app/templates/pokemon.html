@@ -1,11 +1,14 @@
 {% extends 'base.html'%}
-
+{% block styles %}
+  <link rel="stylesheet" href="../static/login.css">
+{% endblock %}
 {% block title %}
     Pokemon Info
 {% endblock %}
 
 {% block content %}
-    <form method="POST" class="w-25 mx-auto">
+{% include './includes/nav.html'%}
+    <form method="POST" class="w-25 mx-auto mt-5">
         {{ form.hidden_tag() }}
         <div class="mb-3">
             {{ form.pokemon_name.label(class='form-label') }}
