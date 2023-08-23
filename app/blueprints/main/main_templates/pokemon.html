@@ -1,14 +1,13 @@
 {% extends 'base.html'%}
-{% block styles %}
-  <link rel="stylesheet" href="../static/login.css">
-{% endblock %}
+
 {% block title %}
     Pokemon Info
 {% endblock %}
 
 {% block content %}
 {% include './includes/nav.html'%}
-    <form method="POST" class="w-25 mx-auto mt-5">
+<div class="pokemon-bg">
+    <form method="POST" class="w-25 mx-auto" style="padding-top: 100px;">
         {{ form.hidden_tag() }}
         <div class="mb-3">
             {{ form.pokemon_name.label(class='form-label') }}
@@ -17,7 +16,7 @@
         {{ form.search_btn(class='btn btn-danger') }}
     </form>
     {% if pokemon %}
-      <div class="card mx-auto text-bg-light border-danger my-5" style="width: 18rem;">
+      <div class="card mx-auto text-bg-light border-danger" style="width: 18rem;">
         <img src={{pokemon.sprites}} class="card-img-top" alt="front shiny">
         <div class="card-body">
           <h3 class="card-title">{{pokemon.name}}</h3>
@@ -43,5 +42,7 @@
           </div>
         </div>
       </div>
+      
     {% endif %}
+    </div>
 {% endblock %}
