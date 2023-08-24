@@ -7,8 +7,8 @@ db = SQLAlchemy()
 
 team = db.Table(
     'team',
-    db.Column('team_id', db.integer, db.ForeignKey('user.id')),
-    db.Column('pokemon_id', db.integer, db.ForeignKey('pokemon.id'))
+    db.Column('team_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('pokemon_id', db.Integer, db.ForeignKey('caught__pokemon.id'))
 )
 
 class User(db.Model, UserMixin):
@@ -20,7 +20,9 @@ class User(db.Model, UserMixin):
     date_created = db.Column(db.DateTime, default=datetime.utcnow())
     team = db.relationship(
         'User', secondary=team,
-        primaryjoin = (team.columns.team_id == id)
+        primaryjoin = (team.columns.team_id == id),
+        backref = db.backref('team', lazy='dynamic'),
+        lazy='dynamic'
     )
 
     def __init__(self, first_name, last_name, email, password):
@@ -40,7 +42,9 @@ class Caught_Pokemon(db.Model):
     defense = db.Column(db.String, nullable=False)
     team = db.relationship(
         'Caught_Pokemon', secondary=team,
-        primaryjoin = (team.columns.pokemon_id == id)
+        primaryjoin = (team.columns.pokemon_id == id),
+        backref = db.backref('team', lazy='dynamic'),
+        lazy='dynamic'
     )
 
     def __init__(self, name, abilities, base_experience, sprites, hp, attack, defense):

@@ -15,7 +15,7 @@ def login():
         if queried_user and check_password_hash(queried_user.password, password):
            login_user(queried_user)
            flash(f'Hello, {queried_user.first_name}', 'info')
-           return redirect(url_for('home'))
+           return redirect(url_for('main.home'))
         else:
            flash('Invalid email or password', 'danger')
            return redirect(url_for('auth.login'))
@@ -47,4 +47,4 @@ def signup():
 @auth.route('/logout')
 def logout():
    logout_user()
-   return redirect(url_for('home'))
+   return redirect(url_for('main.home'))
