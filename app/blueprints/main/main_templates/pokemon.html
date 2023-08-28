@@ -16,30 +16,26 @@
         {{ form.search_btn(class='btn btn-danger') }}
     </form>
     {% if pokemon %}
-      <div class="card mx-auto text-bg-light border-danger" style="width: 18rem;">
-        <img src={{pokemon.sprites}} class="card-img-top" alt="front shiny">
+      <div class="card mx-auto text-bg-light border-danger mt-4" style="width: 18rem;">
+        <img src={{pokemon.sprites}} class="card-img-top mx-auto" style="height: 150px; width:150px;" alt="front shiny">
         <div class="card-body">
           <h3 class="card-title">{{pokemon.name}}</h3>
           <p class="card-text"><strong>Base Experience:</strong> {{pokemon.base_experience}}</p>
           <div class="card-header border-danger">
             Abilities:
           </div>
-          <div class="card-body">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">{{pokemon.abilities.ability1}}</li>
             <li class="list-group-item">{{pokemon.abilities.ability2}}</li>
           </ul>
-          </div>
           <div class="card-header border-danger">
             Stats:
           </div>
-          <div class="card-body">
             <ul class="list-group list-group-flush">
             <li class="list-group-item">HP: {{pokemon.stats.hp}}</li>
             <li class="list-group-item">ATTACK: {{pokemon.stats.attack}}</li>
             <li class="list-group-item">DEFENSE: {{pokemon.stats.defense}}</li>
           </ul>
-          </div>
           <a href="{{ url_for('main.catch_pokemon', pokemon_name=pokemon.name) }}" class="btn d-block btn-dark w-50 mx-auto mt-3">Catch</a>
         </div>
       </div>

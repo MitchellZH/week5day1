@@ -19,8 +19,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String, nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow())
     team = db.relationship(
-        'User', secondary=team,
-        primaryjoin = (team.columns.team_id == id),
+        'Caught_Pokemon', secondary=team,
         backref = db.backref('team', lazy='dynamic'),
         lazy='dynamic'
     )
@@ -31,6 +30,9 @@ class User(db.Model, UserMixin):
         self.email = email
         self.password = generate_password_hash(password)
 
+    def can_add_pokemon(self):
+        return len(list(self.team)) < 5
+
 class Caught_Pokemon(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -40,12 +42,6 @@ class Caught_Pokemon(db.Model):
     hp = db.Column(db.String, nullable=False)
     attack = db.Column(db.String, nullable=False)
     defense = db.Column(db.String, nullable=False)
-    team = db.relationship(
-        'Caught_Pokemon', secondary=team,
-        primaryjoin = (team.columns.pokemon_id == id),
-        backref = db.backref('team', lazy='dynamic'),
-        lazy='dynamic'
-    )
 
     def __init__(self, name, abilities, base_experience, sprites, hp, attack, defense):
         self.name = name

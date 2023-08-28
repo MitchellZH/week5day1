@@ -1,0 +1,46 @@
+{% extends 'base.html'%}
+
+{% block title %}
+    Caught Pokemon
+{% endblock %}
+
+{% block content %}
+{% include './includes/nav.html'%}
+<div class="container">
+<h1 class="text-center">Caught Pokemon</h1>
+<div class="row">
+{% for pokemon in caught_pokemon %}
+
+    <div class="col my-4">
+    <div class="card mx-auto text-bg-light border-danger" style="width: 18rem;">
+        <img src={{pokemon.sprites}} class="card-img-top mx-auto" style="height: 150px; width:150px;" alt="front shiny">
+        <div class="card-body">
+            <h3 class="card-title">{{pokemon.name}}</h3>
+            <p class="card-text"><strong>Base Experience:</strong> {{pokemon.base_experience}}</p>
+            <div class="card-header border-danger">
+                Abilities:
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{pokemon.abilities}}</li>
+            </ul>
+            <div class="card-header border-danger">
+                Stats:
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">HP: {{pokemon.hp}}</li>
+                <li class="list-group-item">ATTACK: {{pokemon.attack}}</li>
+                <li class="list-group-item">DEFENSE: {{pokemon.defense}}</li>
+            </ul>
+            {% if pokemon.inTeam %}
+                <a href="{{ url_for('main.remove_from_team', pokemon_id=pokemon.id) }}" class="btn d-block btn-warning w-50 mx-auto mt-3">Remove from team</a>
+            {% else %}
+                <a href="{{ url_for('main.add_to_team', pokemon_id=pokemon.id) }}" class="btn d-block btn-dark w-50 mx-auto mt-3">Add to team</a>
+            {% endif %}
+        </div>
+      </div>
+      </div>
+{% endfor %}
+
+    </div>
+    </div>
+{% endblock %}

@@ -2,16 +2,61 @@ from . import main
 from flask import request, render_template, redirect, url_for, flash
 import requests
 from .forms import SearchForm
-from app.models import db, Caught_Pokemon
-from flask_login import login_required
+from app.models import db, Caught_Pokemon, User, team
+from flask_login import login_required, current_user
+
 
 @main.route("/")
 @main.route("/home")
 def home():
     return render_template('home.html')
 
-@main.route('/team/<int:user_id>')
+@main.route('/view_team')
+@login_required
+def view_team():
+  user = User.query.get(current_user.id)
+  
+  pokemon_list = user.team.all()
+  
+  return render_template("team.html", pokemon_list=pokemon_list)
 
+
+@main.route('/add_to_team/<int:pokemon_id>')
+@login_required
+def add_to_team(pokemon_id):
+  if current_user.can_add_pokemon():
+    pokemon = Caught_Pokemon.query.get(pokemon_id)
+
+    current_user.team.append(pokemon)
+
+    db.session.commit()
+
+    flash(f"{pokemon.name} was added to your team!", 'success')
+    return redirect(url_for('main.caught_pokemon'))
+  else:
+    flash(f"Your team is at full capacity!", 'danger')
+    return redirect(url_for('main.caught_pokemon'))
+      
+
+@main.route('/remove_from_team/<int:pokemon_id>')
+@login_required
+def remove_from_team(pokemon_id):
+  pokemon = Caught_Pokemon.query.get(pokemon_id)
+
+  current_user.team.remove(pokemon)
+
+  db.session.commit()
+
+  flash(f"{pokemon.name} was released from your team!", 'warning')
+  return redirect(url_for('main.caught_pokemon'))
+  
+@main.route('/caught_pokemon')
+def caught_pokemon():
+   caught_pokemon = Caught_Pokemon.query.all()
+   for pokemon in caught_pokemon:
+      if pokemon in current_user.team:
+         pokemon.inTeam = True
+   return render_template('caught_pokemon.html', caught_pokemon=caught_pokemon)
 
 @main.route('/info', methods=['GET', 'POST'])
 @login_required

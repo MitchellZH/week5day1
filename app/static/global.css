@@ -4,6 +4,7 @@
 
 .pokemon-bg{
   background-image:linear-gradient(rgba(28, 73, 73, 0.74),rgba(37, 1, 1, 0.089)), url(https://cdnb.artstation.com/p/assets/images/images/026/026/071/large/yuuki-morita-compfinalsign5.jpg?1587658884);
+  background-attachment: fixed;
   height:100vh;
   background-repeat: no-repeat;
   background-size: cover;
