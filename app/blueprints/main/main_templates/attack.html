@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Battle
+{% endblock %}
+
+{% block content %}
+{% include './includes/nav.html'%}
+<div class="pokemon-bg">
+<div class="container">
+  <h1 class="text-center">Pokemon Battle</h1>
+  <h3 class="text-center">{{user1.first_name}} vs. {{user2.first_name}}</h3>
+  <div class="row">
+    <div class="col">
+      <table class="table table-primary align-middle">
+        <thead>
+          <tr>
+            <th scope="col">Power: {{user_1_power}}</th>
+            <th scope="col">Name</th>
+            <th scope="col">Abilities</th>
+            <th scope="col">Attack</th>
+            <th scope="col">Defense</th>
+            <th scope="col">HP</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          {% for pokemon in user_1_team %}
+          <tr>
+            <th scope="row"><img src="{{pokemon.sprites}}" alt="{{pokemon.name}}"></th>
+            <td>{{pokemon.name}}</td>
+            <td>{{pokemon.abilities}}</td>
+            <td>{{pokemon.attack}}</td>
+            <td>{{pokemon.defense}}</td>
+            <td>{{pokemon.hp}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <table class="table table-danger align-middle">
+        <thead>
+          <tr>
+            <th scope="col">Power: {{user_2_power}}</th>
+            <th scope="col">Name</th>
+            <th scope="col">Abilities</th>
+            <th scope="col">Attack</th>
+            <th scope="col">Defense</th>
+            <th scope="col">HP</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          {% for pokemon in user_2_team %}
+          <tr>
+            <th scope="row"><img src="{{pokemon.sprites}}" alt="{{pokemon.name}}"></th>
+            <td>{{pokemon.name}}</td>
+            <td>{{pokemon.abilities}}</td>
+            <td>{{pokemon.attack}}</td>
+            <td>{{pokemon.defense}}</td>
+            <td>{{pokemon.hp}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h1>The winner is: {{winner}}</h1>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

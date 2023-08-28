@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Trainers
+{% endblock %}
+
+{% block content %}
+{% include './includes/nav.html'%}
+<div class="container">
+<h1 class="text-center">Trainers</h1>
+<div class="row justify-content-center">
+{% for user in users %}
+{% if current_user.id != user.id %}
+    <div class="col-3 my-4">
+      <div class="card">
+        <div class="card-header">
+          {{user.first_name}}
+        </div>
+        <div class="card-body">
+          <a href="{{ url_for('main.attack', user_id=user.id) }}" class="btn btn-dark">Attack</a>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+{% endfor %}
+
+    </div>
+    </div>
+{% endblock %}

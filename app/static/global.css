@@ -13,3 +13,11 @@
   text-align: center;
   margin-top: -50px;
 }
+
+.gradient_bg {
+  background: #C6FFDD;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #ff0109, #313131, #047e9c);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #ff0109, #2e2e2e, #047e9c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  font-family: 'Roboto', sans-serif;
+  color: white;
+}

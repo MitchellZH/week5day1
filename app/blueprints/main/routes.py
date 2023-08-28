@@ -11,6 +11,38 @@ from flask_login import login_required, current_user
 def home():
     return render_template('home.html')
 
+@main.route('/attack/<int:user_id>')
+@login_required
+def attack(user_id):
+  user1 = User.query.get(current_user.id)
+  user2 = User.query.get(user_id)
+
+  user_1_team = user1.team.all()
+  user_2_team = user2.team.all()
+
+  user_1_power = 0
+  user_2_power = 0
+  for pokemon in user_1_team:
+    user_1_power += int(pokemon.attack) + int(pokemon.defense) + int(pokemon.hp)
+    
+  for pokemon in user_2_team:
+    user_2_power += int(pokemon.attack) + int(pokemon.defense) + int(pokemon.hp)
+
+  if user_1_power > user_2_power:
+      winner = user1.first_name
+  elif user_2_power > user_1_power:
+      winner = user2.first_name
+  else:
+      winner = "No one!"
+
+  return render_template("attack.html", user1=user1, user2=user2, user_1_team=user_1_team, user_2_team=user_2_team, winner=winner, user_1_power=user_1_power, user_2_power=user_2_power)
+
+@main.route('/trainers')
+def trainers():
+   users = User.query.all()
+   
+   return render_template("trainers.html", users=users)
+
 @main.route('/view_team')
 @login_required
 def view_team():
@@ -70,10 +102,7 @@ def get_pokemon_info():
         data = response.json()
         pokemon = {
             'name': data['name'],
-            'abilities': {
-              'ability1': data['abilities'][0]['ability']['name'],
-              'ability2': data['abilities'][1]['ability']['name']
-            },
+            'abilities': "",
             'base_experience': data['base_experience'],
             'sprites': data['sprites']['front_shiny'],
             'stats': {
@@ -82,6 +111,8 @@ def get_pokemon_info():
                 'defense': data['stats'][2]['base_stat']
             }
         }
+        for ability in data['abilities']:
+            pokemon['abilities'] += " " + ability['ability']['name']
         return render_template('pokemon.html', pokemon=pokemon, form=form)
       return render_template('pokemon.html', form=form)
     else:
@@ -96,7 +127,9 @@ def catch_pokemon(pokemon_name):
       data = response.json()
       
       name = data['name'].title()
-      abilities = f"{data['abilities'][0]['ability']['name']}, {data['abilities'][1]['ability']['name']}"
+      abilities = ""
+      for ability in data['abilities']:
+        abilities += " " + ability['ability']['name']
       base_experience = data['base_experience']
       sprites = data['sprites']['front_shiny']
       hp = data['stats'][0]['base_stat']

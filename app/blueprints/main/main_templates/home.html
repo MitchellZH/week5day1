@@ -1,18 +1,16 @@
-{% extends 'base.html '%}
+{% extends 'base.html' %}
 {% block title %}
     Home
 {% endblock %}
 {% block content %}
 {% include './includes/nav.html'%}
-<div class="container text-center">
-  <div class="row align-items-center" style="height: 500px;">
-    <div class="col">
-      <h1>Welcome to the Home Page!</h1>
+<div class="container-fluid text-center gradient_bg">
+  <div class="row align-items-center" style="height: 100vh;">
+    <div class="col mb-5">
+      <h1>Welcome to the Pokemon Arena!</h1>
     </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <a class="btn btn-primary" href="{{url_for('main.get_pokemon_info')}}" role="button">Pokemon Page</a>
+    <div class="col mb-5">
+      <a class="btn btn-primary" href="{{url_for('main.get_pokemon_info')}}" role="button">Pokemon Search</a>
     </div>
   </div>
 </div>

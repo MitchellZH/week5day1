@@ -10,10 +10,12 @@
         <a class="nav-link" href="{{url_for('main.get_pokemon_info')}}">Pokemon Search</a>
         <a class="nav-link" href="{{url_for('main.caught_pokemon')}}">Caught Pokemon</a>
         <a class="nav-link" href="{{url_for('main.view_team')}}">Your Team</a>
-        {% else %}
+        {% endif %}
+        {% if current_user.is_authenticated == False %}
         <a class="nav-link" href="{{url_for('auth.login')}}">Login</a>
         <a class="nav-link" href="{{url_for('auth.signup')}}">Sign Up</a>
         {% endif %}
+        <a class="nav-link" style="color: red;" href="{{url_for('main.trainers')}}">Attack Trainers</a>
       </div>
       {% if current_user.is_authenticated %}
       <span class="navbar-text">
